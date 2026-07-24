@@ -1,0 +1,7 @@
+# wiki.osmike.com — self-hosted Wikipedia (Kiwix). Bearer-gated so it's OUR knowledge base, not a
+# public mirror the whole internet scrapes. Services send: Authorization: Bearer {$WIKI_TOKEN}
+wiki.osmike.com {
+	@unauth not header Authorization "Bearer {$WIKI_TOKEN}"
+	respond @unauth "unauthorized" 401
+	reverse_proxy 172.17.0.1:8083
+}

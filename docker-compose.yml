@@ -1,0 +1,19 @@
+# MikeWiki — kiwix-serve serving the HOST-downloaded ZIMs. It NEVER downloads (per the
+# super-large-downloads best-practice): the ZIMs are pulled by scripts/host-download.sh first,
+# then mounted READ-ONLY here. Reachable by Caddy on the docker bridge gateway 172.17.0.1:8083.
+services:
+  kiwix:
+    image: ghcr.io/kiwix/kiwix-serve:latest
+    container_name: mikeos-kiwix
+    restart: unless-stopped
+    volumes:
+      - /data/kiwix/zim:/data:ro          # read-only — the container cannot alter/download data
+    ports:
+      - "172.17.0.1:8083:8083"
+    # Explicit file list (globs don't expand in exec-form). Update when refreshing a ZIM.
+    command:
+      - "--port=8083"
+      - "--address=0.0.0.0"
+      - "/data/wikipedia_en_all_maxi_2026-02.zim"
+      - "/data/wikipedia_sv_all_maxi_2026-04.zim"
+      - "/data/wikipedia_fr_all_maxi_2026-05.zim"
