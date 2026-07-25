@@ -10,9 +10,12 @@ services:
       - /data/kiwix/zim:/data:ro          # read-only — the container cannot alter/download data
     ports:
       - "172.17.0.1:8083:8083"
+    # The image's start.sh wrapper builds `kiwix-serve --port=$PORT $@`, so set the port via the
+    # PORT env var (NOT a --port arg — that double-adds --port and crashes) and pass only ZIM paths.
+    environment:
+      - PORT=8083
     # Explicit file list (globs don't expand in exec-form). Update when refreshing a ZIM.
     command:
-      - "--port=8083"
       - "/data/wikipedia_en_all_maxi_2026-02.zim"
       - "/data/wikipedia_sv_all_maxi_2026-04.zim"
       - "/data/wikipedia_fr_all_maxi_2026-05.zim"
