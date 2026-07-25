@@ -13,7 +13,6 @@ services:
     # Explicit file list (globs don't expand in exec-form). Update when refreshing a ZIM.
     command:
       - "--port=8083"
-      - "--address=0.0.0.0"
       - "/data/wikipedia_en_all_maxi_2026-02.zim"
       - "/data/wikipedia_sv_all_maxi_2026-04.zim"
       - "/data/wikipedia_fr_all_maxi_2026-05.zim"
